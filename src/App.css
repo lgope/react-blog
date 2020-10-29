@@ -1,0 +1,89 @@
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background-color: #f1f1f1;
+}
+.content {
+  min-height: calc(100vh - 70px);
+}
+
+.footer {
+  height: 65px;
+  /* background-color: #dfe2e2; #f8f9fc */
+  background: rgba(0, 127, 61, 0.1);
+}
+
+.app-navbar {
+  background: rgba(0, 127, 61, 0.1);
+}
+
+.tags-name {
+  border-radius: 5px;
+}
+
+/* a tag styles */
+a {
+  color: #000;
+}
+
+a:hover {
+  color: #337ab7;
+}
+
+.users-profile {
+  background-color: #ececec;
+}
+
+/* buttons icon styles */
+.hvr-grow {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+.hvr-grow:hover,
+.hvr-grow:focus,
+.hvr-grow:active {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+/* set a div in the middle of the page */
+.not-found-page {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.notfound-image {
+  background: url('./img/norma-404.png') no-repeat;
+  height: 200px;
+  width: 500px;
+}
+
+/* offline or online alert */
+.connection-alert {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  z-index: 9999;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 200;
+  padding: 1.6rem 2rem;
+  -webkit-box-shadow: 0 4rem 4rem rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2rem 3rem rgba(0, 0, 0, 0.25);
+}
+.alert--connected {
+  background-color: #20bf6b;
+}
+.alert--disconnected {
+  background-color: #eb4d4b;
+}
