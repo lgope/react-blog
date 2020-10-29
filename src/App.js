@@ -33,11 +33,13 @@ const App = () => {
       <div className='content'>
         <Navbar />
         <Switch>
+
+          {/* login and pass reset route */}
           <Route exact path='/' component={LoginForm} />
           <Route exact path='/reset-password' component={ResetPassword} />
 
           {/* Protected Routes */}
-          {/* <Route exact path='/home' component={Home} /> */}
+
           <ProtectedRoute exact path='/home' component={Home} />
 
           <ProtectedRoute exact path='/tags' component={Tags} />
