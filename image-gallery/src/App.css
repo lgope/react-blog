@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: #e5e5e5;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: row;
+  font-size: 30px;
+  text-align: center;
+}
+
+.media-panal {
+  padding: 10px;
+  flex: 20%;
+
+  width: 340px;
+  height: 980px;
+  left: 0px;
+  top: 0px;
+
+  background: #ffffff;
+
+  overflow: hidden;
+}
+
+.media-text {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23px;
+  margin-left: -227px;
+  color: #000;
+}
+
+.images {
+  width: 333px;
+  height: 250px;
+  margin: 3px;
+  border: 1px solid grey;
+}
+
+/* selected image panel styles  */
+.selected-images-panel {
+  /* position: absolute; */
+  padding: 10px;
+  flex: 80%;
+  width: 1160px;
+  height: 820px;
+  left: 390px;
+  top: 50px;
+  margin: 60px;
+
+  background: #ffffff;
+  border-radius: 8px;
+}
+/* 
+.image-drop-field {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+} */
+
+/* image drop field styles */
+.drop-field {
+  margin: auto;
+  width: 20%;
+  min-height: 200px;
+  border: 2px dotted grey;
+  border-radius: 10px;
+}
+/* image drop field all p tag styles */
+.drop-field p {
+  font-size: medium;
+}
+
+/* Responsive layout - makes a one column-layout instead of two-column layout */
+@media (max-width: 800px) {
+  .app-container {
+    flex-direction: column;
+  }
+}
