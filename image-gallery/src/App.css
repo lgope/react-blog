@@ -108,6 +108,7 @@ body {
 /* image action buttons styles */
 .image-container .action-btn {
   visibility: hidden;
+  display: flex;
   position: absolute;
   top: 11%;
   left: 19%;
@@ -124,7 +125,7 @@ body {
 }
 
 /* image action button icon styles */
-.image-container .action-btn button {
+.image-container .action-btn .settings-btn, .remove-btn {
   font-size: medium;
   border: none;
   background-color: #555;
@@ -140,17 +141,18 @@ body {
 /* popup styles */
 .popup-menu {
   /* visibility: hidden; */
-  position: absolute;
   z-index: 1;
+  position: absolute;
+  padding: 3px;
   /* display: none; */
   width: 260px;
-  height: 298px;
+  height: 215px;
   /* margin: 3px; */
   background-color: #ffffff;
   border: 1px solid grey;
   border-radius: 10px;
-  top: 331%;
-  left: 212%;
+  top: 425%;
+  left: 194%;
   transform: translate(-50%, -50%);
   /* -ms-transform: translate(-50%, -50%); */
   color: #000;

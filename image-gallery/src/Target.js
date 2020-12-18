@@ -56,7 +56,7 @@ class Target extends Component {
       <div className='selected-images-panel'>
         <div className='selected-images'>
           {selectedImages.map((image, i) => (
-            <div className='image-container'>
+            <div className='image-container' key={image.char_id}>
               <Card
                 key={image.char_id}
                 index={i}
@@ -72,11 +72,16 @@ class Target extends Component {
                 >
                   <FontAwesomeIcon icon={faCog} />
                 </button> */}
-                <Modal/>
+                <Modal image={image} index={i}/>
                 {/* <button className='update-btn' onClick={this.openModalHandler}>
-                </button> */}{' '}
+                </button> */}
+                {/* <div style={{visibility: 'hidden'}}>
+                <Modal style={{zIndex: 1}}/>
+                  heelo</div> */}
+                  {' '}
                 |{' '}
                 <button
+                className="remove-btn"
                   onClick={() => deleteImage(image.char_id)}
                   title='Remove'
                 >

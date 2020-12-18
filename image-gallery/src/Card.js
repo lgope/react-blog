@@ -89,7 +89,6 @@ class Card extends React.Component {
     index: PropTypes.number.isRequired,
     isDragging: PropTypes.bool.isRequired,
     id: PropTypes.any.isRequired,
-    text: PropTypes.string.isRequired,
     moveCard: PropTypes.func.isRequired,
     imgUrl: PropTypes.string.isRequired,
   };
