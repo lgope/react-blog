@@ -110,8 +110,7 @@ class Card extends React.Component {
       connectDropTarget &&
       connectDragSource(
         connectDropTarget(
-          <img src={imgUrl} alt='' style={{ ...style, opacity }} />
-          // <div style={{ ...style, opacity }}>{text}</div>
+          <img src={imgUrl} alt='' className="images" style={{ opacity }} />
         )
       )
     );

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
 
-
-const itemSource = {
+const imageSource = {
   beginDrag(props) {
     console.log('dragging');
-    return props.item;
+    return props.image;
   },
 
   endDrag(props, monitor, component) {
@@ -13,7 +12,7 @@ const itemSource = {
       return;
     }
 
-    return props.handleDrop(props.item.char_id);
+    return props.handleDrop(props.image.char_id);
   },
 };
 
@@ -25,23 +24,23 @@ function collect(connect, monitor) {
   };
 }
 
-class Item extends Component {
+class MediaPanel extends Component {
   render() {
-    const { isDragging, connectDragSource, item } = this.props;
+    const { isDragging, connectDragSource, image } = this.props;
     const opacity = isDragging ? 0 : 1;
 
     return connectDragSource(
       <div className='images'>
-        {/* <span>{'item.name'}</span> */}
-        {/* {this.state.imageList.map(image => ( */}
-          <img style={{width: "333px",
-height: "250px"}} src={item.img} alt={item.name} />
-        {/* ))} */}
+        <img
+          style={{ width: '333px', height: '250px' }}
+          src={image.img}
+          alt={image.name}
+        />
       </div>
     );
   }
 }
 
-export default DragSource('item', itemSource, collect)(Item);
+export default DragSource('image', imageSource, collect)(MediaPanel);
 
 // this.setState({ imageList: res.data })
