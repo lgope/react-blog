@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
 import imageIcon from './asstes/image_icon.png';
+import settingIcon from './asstes/settingss.png';
 import Card from './Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faTrash } from '@fortawesome/free-solid-svg-icons';
+
+import Modal from './components/modal/Modal.component';
 
 function collect(connect, monitor) {
   console.log('image ', monitor.getItem());
@@ -15,9 +18,26 @@ function collect(connect, monitor) {
 }
 
 class Target extends Component {
-  // state = {
-  //   actionBtnVisibility: 'hidden',
-  // };
+  state = {
+    popupVisibility: 'hidden',
+    isShowing: false,
+  };
+
+  handlePopupVer() {
+    this.setState({ popupVisibility: 'visible' });
+  }
+
+  openModalHandler = () => {
+    this.setState({
+      isShowing: true,
+    });
+  };
+
+  closeModalHandler = () => {
+    this.setState({
+      isShowing: false,
+    });
+  };
 
   render() {
     const {
@@ -28,26 +48,15 @@ class Target extends Component {
       moveCard,
       deleteImage,
     } = this.props;
-    // console.log('lls ', selectedImages  );
-    console.log('object ', this.props.image);
+
     const backgroundColor = hovered ? 'lightgreen' : 'white';
     const visibility = selectedImages.length === 12 ? 'hidden' : 'visible';
-    console.log('hovered ', hovered);
-    const actionBtnVisibility = !hovered ? 'visible':'hidden';
-    console.log('abv ', actionBtnVisibility);
+
     return connectDropTarget(
       <div className='selected-images-panel'>
         <div className='selected-images'>
           {selectedImages.map((image, i) => (
-            <div
-              className='image-container'
-              // onMouseEnter={() =>
-              //   this.setState({ actionBtnVisibility: 'visible' })
-              // }
-              // onMouseLeave={() =>
-              //   this.setState({ actionBtnVisibility: 'hidden' })
-              // }
-            >
+            <div className='image-container'>
               <Card
                 key={image.char_id}
                 index={i}
@@ -55,20 +64,32 @@ class Target extends Component {
                 imgUrl={image.img}
                 moveCard={moveCard}
               />
-              <div
-                className='action-btn'
-                // style={{ visibility: actionBtnVisibility }}
-              >
-                <button onClick={() => deleteImage(image.char_id)} title="Delete">
-                  <FontAwesomeIcon icon={faEdit} />
-                </button>{' '}
+              <div className='action-btn'>
+                {/* <button
+                  className='update-btn'
+                  title='Update'
+                  onClick={() => this.handlePopupVer()}
+                >
+                  <FontAwesomeIcon icon={faCog} />
+                </button> */}
+                <Modal/>
+                {/* <button className='update-btn' onClick={this.openModalHandler}>
+                </button> */}{' '}
                 |{' '}
-                <button onClick={() => deleteImage(image.char_id)} title="Update">
+                <button
+                  onClick={() => deleteImage(image.char_id)}
+                  title='Remove'
+                >
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
               </div>
             </div>
           ))}
+
+          {/* custom modal */}
+          {/* <div style={{ visibility: this.state.popupVisibility }}>
+            <Modal popupVisibility={this.state.popupVisibility} />
+          </div> */}
 
           {/* image drop field */}
           <div className='drop-field' style={{ backgroundColor, visibility }}>
@@ -80,7 +101,6 @@ class Target extends Component {
             <p>Drop an image from Media Panel1</p>
           </div>
         </div>
-        {/* )} */}
       </div>
     );
   }
