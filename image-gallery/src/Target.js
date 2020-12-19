@@ -57,6 +57,7 @@ class Target extends Component {
         <div className='selected-images'>
           {selectedImages.map((image, i) => (
             <div className='image-container' key={image.char_id}>
+              
               <Card
                 key={image.char_id}
                 index={i}
@@ -65,6 +66,8 @@ class Target extends Component {
                 updateNewSequence={updateNewSequence}
               />
               <div className='action-btn'>
+
+                {/* setting icon and popup modal */}
                 <Modal image={image} index={i} /> |{' '}
                 <button
                   className='remove-btn'
@@ -76,11 +79,6 @@ class Target extends Component {
               </div>
             </div>
           ))}
-
-          {/* custom modal */}
-          {/* <div style={{ visibility: this.state.popupVisibility }}>
-            <Modal popupVisibility={this.state.popupVisibility} />
-          </div> */}
 
           {/* image drop field */}
           <div className='drop-field' style={{ backgroundColor, visibility }}>

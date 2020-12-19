@@ -11,7 +11,7 @@ class Slider extends Component {
           min={this.props.min}
           max={this.props.max}
           value={this.props.value}
-          onChange={(e) => this.props.handleChange(e)}
+          onChange={this.props.handleChange}
         //   onChange={(e) => this.handleChange(e)}
         />
         {`${this.props.value}${this.props.unit}`}

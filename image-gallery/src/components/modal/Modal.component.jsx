@@ -1,74 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
 import settingIcon from '../../asstes/settingss.png';
 import './modal.styles.css';
 
 // filter stuff
 import SidebarItem from '../filter/SidebarItem.component';
 import Slider from '../filter/Slider';
-
-const DEFAULT_OPTIONS = [
-  {
-    name: 'Brightness',
-    property: 'brightness',
-    value: 100,
-    range: {
-      min: 0,
-      max: 200,
-    },
-    unit: '%',
-  },
-  {
-    name: 'Contrast',
-    property: 'contrast',
-    value: 100,
-    range: {
-      min: 0,
-      max: 200,
-    },
-    unit: '%',
-  },
-  {
-    name: 'Saturation',
-    property: 'saturate',
-    value: 100,
-    range: {
-      min: 0,
-      max: 200,
-    },
-    unit: '%',
-  },
-  {
-    name: 'Blur',
-    property: 'blur',
-    value: 0,
-    range: {
-      min: 0,
-      max: 20,
-    },
-    unit: 'px',
-  },
-];
-
 class Modal extends React.Component {
   state = {
     isOpen: false,
     isOptionChanged: false,
     selectedOptionIndex: 0,
-    options: DEFAULT_OPTIONS,
+    canvasImages: JSON.parse(localStorage.getItem('selectedImages')),
+    options: this.props.image.filter,
   };
 
+  // show or hide popup modal
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen,
     });
   }
 
+  // show image change layout or filter layout functionality
   isOptionChangedToggle() {
     this.setState({
       isOptionChanged: !this.state.isOptionChanged,
     });
   }
 
+  // change filter options value
   handleSliderChange(event) {
     // updating options value
     this.setState({
@@ -79,7 +39,18 @@ class Modal extends React.Component {
       ),
     });
 
-    console.log('image ', this.props.image);
+    this.props.image.filter = this.state.options;
+    const updatedCanvasImages = this.state.canvasImages.map(image =>
+      image.img === this.props.image.img
+        ? { ...image, filter: this.state.options }
+        : image
+    );
+
+    localStorage.setItem('selectedImages', JSON.stringify(updatedCanvasImages));
+
+    // console.log('image ', this.props.image);
+    console.log('image1 ', this.state.canvasImages);
+    console.log('image2 ', updatedCanvasImages);
   }
 
   getImageStyle() {
@@ -87,7 +58,7 @@ class Modal extends React.Component {
       return `${option.property}(${option.value}${option.unit})`;
     });
 
-    console.log('ff ', filters.join(' '));
+    console.log('ff ', filters);
 
     return { filter: filters.join(' ') };
   }
@@ -98,7 +69,6 @@ class Modal extends React.Component {
     console.log('so ', selectedOption);
 
     return (
-      // <div >
       <div>
         <button className='settings-btn' onClick={() => this.toggle()}>
           <img src={settingIcon} alt='settings' />

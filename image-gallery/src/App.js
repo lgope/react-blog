@@ -4,6 +4,7 @@ import axios from 'axios';
 import Target from './Target';
 // components
 import MediaPanel from './components/MediaPanel.component';
+import DEFAULT_OPTIONS from './components/filter/defaultFilterOptions';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 const update = require('immutability-helper');
@@ -29,7 +30,7 @@ class App extends Component {
     )[0];
 
     // by default filter is empty
-    image.filter = "";
+    image.filter = DEFAULT_OPTIONS;
     console.log('new image ', image);
 
     // checking total length

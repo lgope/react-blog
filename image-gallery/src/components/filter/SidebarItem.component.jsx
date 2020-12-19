@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './filter.styles.css'
+import './filter.styles.css';
 
 export default class SidebarItem extends Component {
   render() {
@@ -13,16 +13,3 @@ export default class SidebarItem extends Component {
     );
   }
 }
-
-// import React from 'react';
-
-// export default function SidebarItem({ name, active, handleClick }) {
-//   return (
-//     <button
-//       className={`sidebar-item ${active ? 'active' : ''}`}
-//       onClick={handleClick}
-//     >
-//       {name}
-//     </button>
-//   );
-// }

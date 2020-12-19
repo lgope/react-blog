@@ -3,15 +3,8 @@ import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import {
   DragSource,
-  DropTarget,
-  ConnectDropTarget,
-  ConnectDragSource,
-  DropTargetMonitor,
-  DropTargetConnector,
-  DragSourceConnector,
-  DragSourceMonitor,
+  DropTarget
 } from 'react-dnd';
-import { XYCoord } from 'dnd-core';
 import flow from 'lodash/flow';
 
 const style = {
@@ -90,13 +83,21 @@ class Card extends React.Component {
     isDragging: PropTypes.bool.isRequired,
     id: PropTypes.any.isRequired,
     updateNewSequence: PropTypes.func.isRequired,
-    imgUrl: PropTypes.string.isRequired,
   };
+
+  getImageStyle() {
+    const filters = this.props.image.filter.map(option => {
+      return `${option.property}(${option.value}${option.unit})`;
+    });
+
+    console.log('ff ', filters);
+
+    return filters.join(' ');
+  }
 
   render() {
     const {
       image,
-      text,
       isDragging,
       connectDragSource,
       connectDropTarget,
@@ -109,7 +110,12 @@ class Card extends React.Component {
       connectDropTarget &&
       connectDragSource(
         connectDropTarget(
-          <img src={image.img} alt={image.name} className="images" style={{ opacity }} />
+          <img
+            src={image.img}
+            alt={image.name}
+            className='images'
+            style={{ filter: this.getImageStyle(), opacity }}
+          />
         )
       )
     );
