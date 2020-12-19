@@ -30,13 +30,7 @@ class MediaPanel extends Component {
     const opacity = isDragging ? 0 : 1;
 
     return connectDragSource(
-      <div className='images'>
-        <img
-          style={{ width: '333px', height: '250px' }}
-          src={image.img}
-          alt={image.name}
-        />
-      </div>
+      <img className='images' src={image.img} alt={image.name} />
     );
   }
 }

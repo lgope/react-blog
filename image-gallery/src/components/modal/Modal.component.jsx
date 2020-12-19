@@ -78,6 +78,8 @@ class Modal extends React.Component {
           : { ...option, value: event.target.value }
       ),
     });
+
+    console.log('image ', this.props.image);
   }
 
   getImageStyle() {
@@ -85,7 +87,7 @@ class Modal extends React.Component {
       return `${option.property}(${option.value}${option.unit})`;
     });
 
-    console.log('ff ', filters);
+    console.log('ff ', filters.join(' '));
 
     return { filter: filters.join(' ') };
   }
@@ -172,11 +174,10 @@ class Modal extends React.Component {
                       />
                     );
                   })}
-                  {/* <br />
-                  <button>Save</button> */}
                 </div>
               </div>
 
+              {/* slider input */}
               <Slider
                 min={selectedOption.range.min}
                 max={selectedOption.range.max}

@@ -45,7 +45,7 @@ class Target extends Component {
       hovered,
       selectedImages,
       image,
-      moveCard,
+      updateNewSequence,
       deleteImage,
     } = this.props;
 
@@ -61,27 +61,13 @@ class Target extends Component {
                 key={image.char_id}
                 index={i}
                 id={image.char_id}
-                imgUrl={image.img}
-                moveCard={moveCard}
+                image={image}
+                updateNewSequence={updateNewSequence}
               />
               <div className='action-btn'>
-                {/* <button
-                  className='update-btn'
-                  title='Update'
-                  onClick={() => this.handlePopupVer()}
-                >
-                  <FontAwesomeIcon icon={faCog} />
-                </button> */}
-                <Modal image={image} index={i}/>
-                {/* <button className='update-btn' onClick={this.openModalHandler}>
-                </button> */}
-                {/* <div style={{visibility: 'hidden'}}>
-                <Modal style={{zIndex: 1}}/>
-                  heelo</div> */}
-                  {' '}
-                |{' '}
+                <Modal image={image} index={i} /> |{' '}
                 <button
-                className="remove-btn"
+                  className='remove-btn'
                   onClick={() => deleteImage(image.char_id)}
                   title='Remove'
                 >
@@ -103,7 +89,7 @@ class Target extends Component {
               alt='greenField'
               style={{ paddingTop: '30px', marginTop: '30px' }}
             />
-            <p>Drop an image from Media Panel1</p>
+            <p>Drop an image from Media Panel</p>
           </div>
         </div>
       </div>

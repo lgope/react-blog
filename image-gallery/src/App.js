@@ -14,7 +14,7 @@ class App extends Component {
     selectedImages: JSON.parse(localStorage.getItem('selectedImages') || '[]'),
   };
 
-  // api call
+  // api call => featching image
   componentDidMount() {
     axios
       .get('https://www.breakingbadapi.com/api/characters?limit=20')
@@ -22,47 +22,43 @@ class App extends Component {
       .catch(err => console.log('err ', err.response));
   }
 
-  deleteItem = char_id => {
+  // adding image to canvas functionality
+  addImageToCanvas = char_id => {
     const image = this.state.imageList.filter(
       img => img.char_id === char_id
     )[0];
-    // console.log('cid ', char_id);
-    // console.log('img ', image);
 
-    if (this.state.selectedImages.length < 12) {
+    // by default filter is empty
+    image.filter = "";
+    console.log('new image ', image);
+
+    // checking total length
+    // checking already image exits or not
+    // then adding the image
+    if (this.state.selectedImages.length > 12) {
+      
+      return alert('Limit is over!');
+      
+    } else if (this.state.selectedImages.some(img => img.img === image.img)) {
+
+      return alert('Already added this image. Please try different');
+
+    } else {
+      // updating the state
       this.setState({
         selectedImages: this.state.selectedImages.concat(image),
       });
 
+      // updating the localstorage
       localStorage.setItem(
         'selectedImages',
         JSON.stringify(this.state.selectedImages)
       );
-
-      // console.log('llss ', localStorage.getItem('selectedImages'));
-    } else alert('Limit is over!');
-    // console.log('ssssi ', image);
-    // console.log('arr ', this.state.selectedImages);
-    // this.setState(prevState => {
-    //   return {
-    //     items: prevState.items.filter(item => item.char_id !== id),
-    //   };
-    // });
+    }
   };
 
+  // delete image from canvas area
   deleteImage(char_id) {
-    console.log('cid ', char_id);
-    // this.setState({
-    //   selectedImages: this.state.selectedImages.filter(
-    //     image => image.char_id !== char_id
-    //   ),
-    // });
-
-    // this.setState(prevState => {
-    //   return {
-    //     selectedImages: prevState.selectedImages.filter(image => image.char_id !== char_id),
-    //   };
-    // });
     let images = JSON.parse(localStorage.getItem('selectedImages') || '[]');
 
     images = images.filter(image => image.char_id !== char_id);
@@ -70,14 +66,11 @@ class App extends Component {
 
     localStorage.setItem('selectedImages', JSON.stringify(images));
 
-    this.setState({selectedImages: images});
-    // localStorage.setItem(
-    //   'selectedImages',
-    //   JSON.stringify(this.state.selectedImages)
-    // );
+    this.setState({ selectedImages: images });
   }
 
-  moveCard = (dragIndex, hoverIndex) => {
+  // updating new sequence after image sort or moved
+  updateNewSequence = (dragIndex, hoverIndex) => {
     const { selectedImages } = this.state;
     const dragCard = selectedImages[dragIndex];
     this.setState(
@@ -91,13 +84,13 @@ class App extends Component {
       })
     );
 
+    // updating local storage
     localStorage.setItem(
       'selectedImages',
       JSON.stringify(this.state.selectedImages)
     );
   };
 
-  // console.log('lls ', localStorage.getItem('selectedImages'));
   render() {
     return (
       <div className='app-container'>
@@ -107,7 +100,7 @@ class App extends Component {
             <MediaPanel
               key={image.char_id}
               image={image}
-              handleDrop={char_id => this.deleteItem(char_id)}
+              handleDrop={char_id => this.addImageToCanvas(char_id)}
             />
           ))}
         </div>
@@ -116,20 +109,8 @@ class App extends Component {
         <Target
           selectedImages={this.state.selectedImages}
           deleteImage={char_id => this.deleteImage(char_id)}
-          moveCard={this.moveCard}
+          updateNewSequence={this.updateNewSequence}
         />
-
-        {/* <div className='selected-image-container'> */}
-          {/* {this.state.selectedImages.map((image, i) => (
-              <Card
-                key={image.char_id}
-                index={i}
-                id={image.char_id}
-                imgUrl={image.img}
-                moveCard={this.moveCard}
-              />
-            ))} */}
-        {/* </div> */}
       </div>
     );
   }

@@ -72,7 +72,7 @@ const cardTarget = {
     }
 
     // Time to actually perform the action
-    props.moveCard(dragIndex, hoverIndex);
+    props.updateNewSequence(dragIndex, hoverIndex);
 
     // Note: we're mutating the monitor item here!
     // Generally it's better to avoid mutations,
@@ -89,13 +89,13 @@ class Card extends React.Component {
     index: PropTypes.number.isRequired,
     isDragging: PropTypes.bool.isRequired,
     id: PropTypes.any.isRequired,
-    moveCard: PropTypes.func.isRequired,
+    updateNewSequence: PropTypes.func.isRequired,
     imgUrl: PropTypes.string.isRequired,
   };
 
   render() {
     const {
-      imgUrl,
+      image,
       text,
       isDragging,
       connectDragSource,
@@ -109,7 +109,7 @@ class Card extends React.Component {
       connectDropTarget &&
       connectDragSource(
         connectDropTarget(
-          <img src={imgUrl} alt='' className="images" style={{ opacity }} />
+          <img src={image.img} alt={image.name} className="images" style={{ opacity }} />
         )
       )
     );
