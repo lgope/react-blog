@@ -1,15 +1,60 @@
 import React, { useState } from 'react';
 import settingIcon from '../../asstes/settingss.png';
-
 import './modal.styles.css';
 
-class Modal extends React.Component {
-  //   const [isOpen, setIsOpen] = useState(false);
+// filter stuff
+import SidebarItem from '../filter/SidebarItem.component';
+import Slider from '../filter/Slider';
 
-  //   const toggle = () => setIsOpen(!isOpen);
+const DEFAULT_OPTIONS = [
+  {
+    name: 'Brightness',
+    property: 'brightness',
+    value: 100,
+    range: {
+      min: 0,
+      max: 200,
+    },
+    unit: '%',
+  },
+  {
+    name: 'Contrast',
+    property: 'contrast',
+    value: 100,
+    range: {
+      min: 0,
+      max: 200,
+    },
+    unit: '%',
+  },
+  {
+    name: 'Saturation',
+    property: 'saturate',
+    value: 100,
+    range: {
+      min: 0,
+      max: 200,
+    },
+    unit: '%',
+  },
+  {
+    name: 'Blur',
+    property: 'blur',
+    value: 0,
+    range: {
+      min: 0,
+      max: 20,
+    },
+    unit: 'px',
+  },
+];
+
+class Modal extends React.Component {
   state = {
     isOpen: false,
     isOptionChanged: false,
+    selectedOptionIndex: 0,
+    options: DEFAULT_OPTIONS,
   };
 
   toggle() {
@@ -24,9 +69,35 @@ class Modal extends React.Component {
     });
   }
 
+  handleSliderChange(event) {
+    // updating options value
+    this.setState({
+      options: this.state.options.map((option, index) =>
+        index !== this.state.selectedOptionIndex
+          ? option
+          : { ...option, value: event.target.value }
+      ),
+    });
+  }
+
+  getImageStyle() {
+    const filters = this.state.options.map(option => {
+      return `${option.property}(${option.value}${option.unit})`;
+    });
+
+    console.log('ff ', filters);
+
+    return { filter: filters.join(' ') };
+  }
+
   render() {
+    const selectedOption = this.state.options[this.state.selectedOptionIndex];
+
+    console.log('so ', selectedOption);
+
     return (
-      <div style={{ zIndex: 1 }}>
+      // <div >
+      <div>
         <button className='settings-btn' onClick={() => this.toggle()}>
           <img src={settingIcon} alt='settings' />
         </button>
@@ -34,7 +105,6 @@ class Modal extends React.Component {
           className='popup-menu'
           style={{ visibility: this.state.isOpen ? 'visible' : 'hidden' }}
         >
-          
           <div className='modal-header-btn'>
             <button
               className='modal-image-btn'
@@ -60,21 +130,60 @@ class Modal extends React.Component {
             <hr />
           </div>
 
-          <div className='modaly-layout'>
-            <div className='change-image-field' style={{ display: !this.state.isOptionChanged ? 'block' : 'none' }}>
+          <div className='modal-layout'>
+            <div
+              className='change-image-field'
+              style={{
+                display: !this.state.isOptionChanged ? 'block' : 'none',
+              }}
+            >
               <img
                 src={this.props.image.img}
-                style={{ height: '150px', width: '150px' }}
+                style={{ height: '129px', width: '150px' }}
                 alt=''
               />
-              <br />
               <button className='modal-change-img-btn'>Change Image</button>
             </div>
 
-            <div className='change-image-field' style={{ display: this.state.isOptionChanged ? 'block' : 'none' }}>
-              <p>filter</p>
-              <br />
-              <button className='modal-change-img-btn'>Change Image</button>
+            <div
+              className='change-image-field'
+              style={{ display: this.state.isOptionChanged ? 'block' : 'none' }}
+            >
+              <div className='image-filter'>
+                <div className='preview-image-filter'>
+                  <img
+                    className='preview-image'
+                    src={this.props.image.img}
+                    style={this.getImageStyle()}
+                    alt=''
+                  />
+                </div>
+
+                <div className='filter-options'>
+                  {this.state.options.map((option, index) => {
+                    return (
+                      <SidebarItem
+                        key={index}
+                        name={option.name}
+                        active={index === this.state.selectedOptionIndex}
+                        handleClick={() =>
+                          this.setState({ selectedOptionIndex: index })
+                        }
+                      />
+                    );
+                  })}
+                  {/* <br />
+                  <button>Save</button> */}
+                </div>
+              </div>
+
+              <Slider
+                min={selectedOption.range.min}
+                max={selectedOption.range.max}
+                value={selectedOption.value}
+                unit={selectedOption.unit}
+                handleChange={e => this.handleSliderChange(e)}
+              />
             </div>
           </div>
         </div>

@@ -99,6 +99,33 @@ body {
   }
 }
 
+@media (max-width: 1100px) {
+
+  .selected-images-panel {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto;
+  }
+
+  .selected-images-panel::-webkit-scrollbar {
+    display: none;
+  }
+  
+}
+
+@media (max-width: 500px) {
+  .selected-images-panel {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto;
+  }
+
+  .selected-images-panel::-webkit-scrollbar {
+    display: none;
+  }
+  
+}
+
 /* image container styles */
 .image-container {
   position: relative;
@@ -125,7 +152,8 @@ body {
 }
 
 /* image action button icon styles */
-.image-container .action-btn .settings-btn, .remove-btn {
+.image-container .action-btn .settings-btn,
+.remove-btn {
   font-size: medium;
   border: none;
   background-color: #555;

@@ -1,3 +1,13 @@
+/* .modal-header-btn {
+  border-bottom-style: solid;
+  border-width: thin;
+} */
+
+.modal-layout {
+  margin: 0%;
+  padding: 0%;
+}
+
 .modal-image-btn,
 .modal-filter-btn,
 .modal-change-img-btn,
@@ -11,11 +21,12 @@
 }
 
 .modal-change-img-btn {
+  margin-top: 12px;
   width: 170px;
   color: blue;
 }
 
-.modal-close-btn{
+.modal-close-btn {
   background-color: #ffffff;
   outline-style: none;
   border: none;
@@ -38,4 +49,27 @@
 .modal-close-btn:hover,
 .modal-change-img-btn:hover {
   background-color: bisque;
+}
+
+.preview-image {
+  height: 129px;
+  width: 150px;
+}
+
+.image-filter {
+  display: flex;
+  flex-wrap: nowrap;
+
+  margin: auto;
+
+  width: 80%;
+}
+
+.filter-options {
+  margin-left: 10px;
+}
+
+.filter-options button {
+  margin: 2px;
+  /* padding: 2px; */
 }

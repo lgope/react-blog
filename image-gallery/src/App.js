@@ -119,7 +119,7 @@ class App extends Component {
           moveCard={this.moveCard}
         />
 
-        <div className='selected-image-container'>
+        {/* <div className='selected-image-container'> */}
           {/* {this.state.selectedImages.map((image, i) => (
               <Card
                 key={image.char_id}
@@ -129,7 +129,7 @@ class App extends Component {
                 moveCard={this.moveCard}
               />
             ))} */}
-        </div>
+        {/* </div> */}
       </div>
     );
   }
