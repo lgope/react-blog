@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
 
+// redux staff
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { addImageToCanvas } from '../redux/actions/imageActions';
+
 const imageSource = {
   beginDrag(props) {
     console.log('dragging');
@@ -12,7 +17,8 @@ const imageSource = {
       return;
     }
 
-    return props.handleDrop(props.image.char_id);
+    // adding new image to canvas
+    return props.addImageToCanvas(props.image.char_id);
   },
 };
 
@@ -35,6 +41,7 @@ class MediaPanel extends Component {
   }
 }
 
-export default DragSource('image', imageSource, collect)(MediaPanel);
-
-// this.setState({ imageList: res.data })
+export default compose(
+  connect(null, { addImageToCanvas }),
+  DragSource('image', imageSource, collect)
+)(MediaPanel);

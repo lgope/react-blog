@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
-import {
-  DragSource,
-  DropTarget
-} from 'react-dnd';
+import { DragSource, DropTarget } from 'react-dnd';
 import flow from 'lodash/flow';
+
+// redux stuff
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { updateNewOrder } from '../../redux/actions/imageActions';
 
 const style = {
   height: '80px',
@@ -19,7 +21,7 @@ const style = {
   cursor: 'move',
 };
 
-const cardSource = {
+const imageSource = {
   beginDrag(props) {
     return {
       id: props.id,
@@ -28,10 +30,10 @@ const cardSource = {
   },
 };
 
-const cardTarget = {
+const imageTarget = {
   hover(props, monitor, component) {
     const dragIndex = monitor.getItem().index;
-    console.log('di ', dragIndex);
+    // console.log('di ', dragIndex);
     const hoverIndex = props.index;
 
     // Don't replace items with themselves
@@ -44,12 +46,15 @@ const cardTarget = {
 
     // Get vertical middle
     const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+    const hoverMiddleX = (hoverBoundingRect.left + hoverBoundingRect.right) / 2;
 
     // Determine mouse position
     const clientOffset = monitor.getClientOffset();
 
     // Get pixels to the top
     const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+    const hoverClientX = clientOffset.y - hoverBoundingRect.left;
 
     // Only perform the move when the mouse has crossed half of the items height
     // When dragging downwards, only move when the cursor is below 50%
@@ -59,13 +64,23 @@ const cardTarget = {
       return;
     }
 
+    // left, right
+    if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
+      return;
+    }
+
     // Dragging upwards
     if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
       return;
     }
 
+    // right, left
+    if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+      return;
+    }
+
     // Time to actually perform the action
-    props.updateNewSequence(dragIndex, hoverIndex);
+    props.updateNewOrder(dragIndex, hoverIndex);
 
     // Note: we're mutating the monitor item here!
     // Generally it's better to avoid mutations,
@@ -75,14 +90,13 @@ const cardTarget = {
   },
 };
 
-class Card extends React.Component {
+class CanvasImage extends React.Component {
   static propTypes = {
     connectDragSource: PropTypes.func.isRequired,
     connectDropTarget: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
     isDragging: PropTypes.bool.isRequired,
     id: PropTypes.any.isRequired,
-    updateNewSequence: PropTypes.func.isRequired,
   };
 
   getImageStyle() {
@@ -103,31 +117,41 @@ class Card extends React.Component {
       connectDropTarget,
     } = this.props;
     const opacity = isDragging ? 0 : 1;
-    console.log('img ', this.props.imgUrl);
+    // console.log('img ', this.props.imgUrl);
 
     return (
       connectDragSource &&
       connectDropTarget &&
       connectDragSource(
         connectDropTarget(
-          <img
-            src={image.img}
-            alt={image.name}
-            className='images'
-            style={{ filter: this.getImageStyle(), opacity }}
-          />
+          <div className='images'>
+            <img
+              src={image.img}
+              alt={image.name}
+              style={{
+                filter: this.getImageStyle(),
+                opacity,
+                width: '333px',
+                height: '250px',
+                borderRadius: '10px',
+              }}
+            />
+          </div>
         )
       )
     );
   }
 }
 
-export default flow(
-  DragSource('card', cardSource, (connect, monitor) => ({
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
-  })),
-  DropTarget('card', cardTarget, connect => ({
-    connectDropTarget: connect.dropTarget(),
-  }))
-)(Card);
+export default compose(
+  connect(null, { updateNewOrder }),
+  flow(
+    DragSource('card', imageSource, (connect, monitor) => ({
+      connectDragSource: connect.dragSource(),
+      isDragging: monitor.isDragging(),
+    })),
+    DropTarget('card', imageTarget, connect => ({
+      connectDropTarget: connect.dropTarget(),
+    }))
+  )
+)(CanvasImage);

@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
-import imageIcon from './asstes/image_icon.png';
-import settingIcon from './asstes/settingss.png';
-import Card from './Card';
+import imageIcon from '../../asstes/image_icon.png';
+import CanvasImage from './CanvasImage.component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faTrash } from '@fortawesome/free-solid-svg-icons';
+// import Card from '../../Card'
 
-import Modal from './components/modal/Modal.component';
+import Modal from '../modal/Modal.component';
+
+// redux stuff
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { deleteImageFromCanvas } from '../../redux/actions/imageActions';
 
 function collect(connect, monitor) {
   console.log('image ', monitor.getItem());
@@ -17,7 +22,7 @@ function collect(connect, monitor) {
   };
 }
 
-class Target extends Component {
+class Canvas extends Component {
   state = {
     popupVisibility: 'hidden',
     isShowing: false,
@@ -44,34 +49,29 @@ class Target extends Component {
       connectDropTarget,
       hovered,
       selectedImages,
-      image,
-      updateNewSequence,
-      deleteImage,
+      deleteImageFromCanvas,
     } = this.props;
 
     const backgroundColor = hovered ? 'lightgreen' : 'white';
     const visibility = selectedImages.length === 12 ? 'hidden' : 'visible';
 
     return connectDropTarget(
-      <div className='selected-images-panel'>
+      <div>
         <div className='selected-images'>
-          {selectedImages.map((image, i) => (
+          {selectedImages && selectedImages.map((image, i) => (
             <div className='image-container' key={image.char_id}>
-              
-              <Card
+              <CanvasImage
                 key={image.char_id}
                 index={i}
                 id={image.char_id}
                 image={image}
-                updateNewSequence={updateNewSequence}
               />
               <div className='action-btn'>
-
                 {/* setting icon and popup modal */}
                 <Modal image={image} index={i} /> |{' '}
                 <button
                   className='remove-btn'
-                  onClick={() => deleteImage(image.char_id)}
+                  onClick={() => deleteImageFromCanvas(image.char_id)}
                   title='Remove'
                 >
                   <FontAwesomeIcon icon={faTrash} />
@@ -95,4 +95,12 @@ class Target extends Component {
   }
 }
 
-export default DropTarget('image', {}, collect)(Target);
+const mapStateToProps = state => ({
+  selectedImages: state.images.selectedImages,
+});
+
+
+export default compose(
+  connect(mapStateToProps, { deleteImageFromCanvas }),
+  DropTarget('image', {}, collect)
+)(Canvas);

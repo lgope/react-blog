@@ -2,6 +2,10 @@ import React from 'react';
 import settingIcon from '../../asstes/settingss.png';
 import './modal.styles.css';
 
+// redux stuff
+import { connect } from 'react-redux';
+import { filterImage } from '../../redux/actions/imageActions';
+
 // filter stuff
 import SidebarItem from '../filter/SidebarItem.component';
 import Slider from '../filter/Slider';
@@ -29,9 +33,9 @@ class Modal extends React.Component {
   }
 
   // change filter options value
-  handleSliderChange(event) {
+  async handleSliderChange(event) {
     // updating options value
-    this.setState({
+    await this.setState({
       options: this.state.options.map((option, index) =>
         index !== this.state.selectedOptionIndex
           ? option
@@ -39,18 +43,17 @@ class Modal extends React.Component {
       ),
     });
 
-    this.props.image.filter = this.state.options;
-    const updatedCanvasImages = this.state.canvasImages.map(image =>
-      image.img === this.props.image.img
-        ? { ...image, filter: this.state.options }
-        : image
-    );
+    // this.props.image.filter = this.state.options;
+    // const updatedCanvasImages = this.props.selectedImages.map(image =>
+    //   image.img === this.props.image.img
+    //      { ...this.props.image, filter: this.state.options }
+    //     : image
+    // );
 
-    localStorage.setItem('selectedImages', JSON.stringify(updatedCanvasImages));
+    // // updating local storage
+    // localStorage.setItem('selectedImages', JSON.stringify(updatedCanvasImages));
 
-    // console.log('image ', this.props.image);
-    console.log('image1 ', this.state.canvasImages);
-    console.log('image2 ', updatedCanvasImages);
+    this.props.filterImage(this.props.image, this.state.options)
   }
 
   getImageStyle() {
@@ -66,7 +69,7 @@ class Modal extends React.Component {
   render() {
     const selectedOption = this.state.options[this.state.selectedOptionIndex];
 
-    console.log('so ', selectedOption);
+    console.log('so ', this.state.canvasImages);
 
     return (
       <div>
@@ -109,6 +112,7 @@ class Modal extends React.Component {
                 display: !this.state.isOptionChanged ? 'block' : 'none',
               }}
             >
+              {/* TODO: show styles */}
               <img
                 src={this.props.image.img}
                 style={{ height: '129px', width: '150px' }}
@@ -153,7 +157,7 @@ class Modal extends React.Component {
                 max={selectedOption.range.max}
                 value={selectedOption.value}
                 unit={selectedOption.unit}
-                handleChange={e => this.handleSliderChange(e)}
+                handleChange={this.handleSliderChange.bind(this)}
               />
             </div>
           </div>
@@ -163,4 +167,8 @@ class Modal extends React.Component {
   }
 }
 
-export default Modal;
+const mapStateToProps = state => ({
+  selectedImages: state.images.selectedImages,
+});
+
+export default connect(mapStateToProps, { filterImage })(Modal);
