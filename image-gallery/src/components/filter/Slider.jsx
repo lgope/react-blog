@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 class Slider extends Component {
-    render() {
+  render() {
     //   console.log('pp ', this.props);
     return (
       <div className='slider-container'>
@@ -12,14 +12,14 @@ class Slider extends Component {
           max={this.props.max}
           value={this.props.value}
           onChange={event => this.props.handleChange(event)}
-        //   onChange={(e) => this.handleChange(e)}
         />
-        {`${this.props.value}${this.props.unit}`}
+        {`${this.props.value} ${this.props.unit}`}
       </div>
     );
   }
 }
 
+// TODO: Detect mouse out side click
 export default Slider;
 
 // import React from 'react'

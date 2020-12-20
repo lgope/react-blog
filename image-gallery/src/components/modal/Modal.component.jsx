@@ -1,8 +1,8 @@
 import React from 'react';
 import settingIcon from '../../asstes/settingss.png';
-import ImageListModal from './ImageListModal.component'
 import './modal.styles.css';
 
+import ImageListPopup from './ImageListPopup.component';
 
 // redux stuff
 import { connect } from 'react-redux';
@@ -16,8 +16,8 @@ class Modal extends React.Component {
     isOpen: false,
     isOptionChanged: false,
     selectedOptionIndex: 0,
-    canvasImages: JSON.parse(localStorage.getItem('selectedImages')),
     options: this.props.image.filter,
+    isPopupOpen: false,
   };
 
   // show or hide popup modal
@@ -45,17 +45,8 @@ class Modal extends React.Component {
       ),
     });
 
-    // this.props.image.filter = this.state.options;
-    // const updatedCanvasImages = this.props.selectedImages.map(image =>
-    //   image.img === this.props.image.img
-    //      { ...this.props.image, filter: this.state.options }
-    //     : image
-    // );
-
-    // // updating local storage
-    // localStorage.setItem('selectedImages', JSON.stringify(updatedCanvasImages));
-
-    this.props.filterImage(this.props.image, this.state.options)
+    // updating filter options
+    this.props.filterImage(this.props.image, this.state.options);
   }
 
   getImageStyle() {
@@ -71,7 +62,6 @@ class Modal extends React.Component {
   render() {
     const selectedOption = this.state.options[this.state.selectedOptionIndex];
 
-    console.log('so ', this.state.canvasImages);
 
     return (
       <div>
@@ -120,8 +110,14 @@ class Modal extends React.Component {
                 style={{ height: '129px', width: '150px' }}
                 alt=''
               />
-              {/* <button className='modal-change-img-btn'>Change Image</button> */}
-              <ImageListModal/>
+              <button className='modal-change-img-btn' onClick={() => this.setState({ isPopupOpen: true })}>Change Image</button>
+
+              <ImageListPopup
+                open={this.state.isPopupOpen}
+                onClose={() => this.setState({ isPopupOpen: false })}
+                currentImage={this.props.image}
+              />
+              {/* <ImageListModal /> */}
             </div>
 
             <div
@@ -143,7 +139,7 @@ class Modal extends React.Component {
                     return (
                       <SidebarItem
                         key={index}
-                        name={option.name}
+                        option={option}
                         active={index === this.state.selectedOptionIndex}
                         handleClick={() =>
                           this.setState({ selectedOptionIndex: index })

@@ -1,25 +1,6 @@
 const DEFAULT_OPTIONS = [
   {
-    name: 'Brightness',
-    property: 'brightness',
-    value: 100,
-    range: {
-      min: 0,
-      max: 200,
-    },
-    unit: '%',
-  },
-  {
-    name: 'Contrast',
-    property: 'contrast',
-    value: 100,
-    range: {
-      min: 0,
-      max: 200,
-    },
-    unit: '%',
-  },
-  {
+    id: 0,
     name: 'Saturation',
     property: 'saturate',
     value: 100,
@@ -27,9 +8,10 @@ const DEFAULT_OPTIONS = [
       min: 0,
       max: 200,
     },
-    unit: '%',
+    unit: 'dmp'
   },
   {
+    id: 1,
     name: 'Blur',
     property: 'blur',
     value: 0,
@@ -37,7 +19,29 @@ const DEFAULT_OPTIONS = [
       min: 0,
       max: 20,
     },
-    unit: 'px',
+    unit: '%'
+  },
+  {
+    id: 2,
+    name: 'Brightness',
+    property: 'brightness',
+    value: 100,
+    range: {
+      min: 0,
+      max: 200,
+    },
+    unit: '%'
+  },
+  {
+    id: 3,
+    name: 'Contrast',
+    property: 'contrast',
+    value: 100,
+    range: {
+      min: 0,
+      max: 200,
+    },
+    unit: '%'
   },
 ];
 

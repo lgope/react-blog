@@ -11,24 +11,24 @@
     cursor: pointer;
     border: none;
     outline: none;
-    background-color: hsl(265, 100%, 86%);
+    background-color: hsl(0, 0%, 99%);
     /* padding: 1rem; */
+    border-radius: 5px;
     position: relative;
     transition: background-color 150ms;
   }
   
   .sidebar-item:hover, .sidebar-item:focus {
-    background-color: hsl(265, 100%, 76%);
+    background-color: hsl(263, 9%, 72%);
   }
   
   .sidebar-item.active {
-    background-color: hsl(265, 100%, 70%);
+    background-color: hsl(155, 74%, 75%);
   }
   
   .sidebar-item::after {
     content: '';
     position: absolute;
-    /* width: 80%; */
     left: 10%;
     bottom: 0;
     height: 1px;

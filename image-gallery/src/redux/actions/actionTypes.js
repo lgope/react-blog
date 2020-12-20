@@ -8,4 +8,6 @@ export const UPDATE_IMAGE_ORDER = 'UPDATE_IMAGE_ORDER';
 
 export const FILTER_IMAGE = 'FILTER_IMAGE';
 
+export const CHANGE_IMAGE = 'CHANGE_IMAGE';
+
 export const IMAGES_LOADING = 'IMAGES_LOADING';

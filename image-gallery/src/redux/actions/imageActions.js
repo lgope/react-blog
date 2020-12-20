@@ -43,6 +43,14 @@ export const filterImage = (currentImage, filterOptions) => dispatch => {
   });
 };
 
+export const changeImage = (currentImage, newImage) => dispatch => {
+  dispatch({
+    type: actions.CHANGE_IMAGE,
+    currentImage,
+    newImage,
+  });
+};
+
 export function setImagesLoading() {
   return {
     type: actions.IMAGES_LOADING,

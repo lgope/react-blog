@@ -26,7 +26,6 @@ export default function testFunc(state = initialState, action) {
 
       // by default filter is empty
       image.filter = DEFAULT_OPTIONS;
-      console.log('new image ', image);
 
       // checking total length
       // checking already image exits or not
@@ -108,6 +107,24 @@ export default function testFunc(state = initialState, action) {
       return {
         ...state,
         selectedImages: updatedCanvasImages,
+      };
+
+    // change image from selected canvas image
+    case actions.CHANGE_IMAGE:
+      action.newImage.filter = DEFAULT_OPTIONS;
+      const changedCanvasImages = state.selectedImages.map(image =>
+        image.img === action.currentImage.img ? { ...action.newImage } : image
+      );
+
+      // updating local storage
+      localStorage.setItem(
+        'selectedImages',
+        JSON.stringify(changedCanvasImages)
+      );
+
+      return {
+        ...state,
+        selectedImages: changedCanvasImages,
       };
 
     case actions.IMAGES_LOADING:
