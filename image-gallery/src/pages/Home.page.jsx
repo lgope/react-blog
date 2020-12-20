@@ -18,8 +18,8 @@ class Home extends Component {
       <div className='app-container'>
         <div className='media-panel'>
           <p className='media-text'>Media Panel</p>
-          {this.props.images.images &&
-            this.props.images.images.map(image => (
+          {this.props.images &&
+            this.props.images.map(image => (
               <MediaPanel key={image.char_id} image={image} />
             ))}
         </div>
@@ -34,7 +34,7 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  images: state.images,
+  images: state.images.images,
 });
 
 export default connect(mapStateToProps, { getImages, addImageToCanvas })(Home);

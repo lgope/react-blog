@@ -1,6 +1,8 @@
 import React from 'react';
 import settingIcon from '../../asstes/settingss.png';
+import ImageListModal from './ImageListModal.component'
 import './modal.styles.css';
+
 
 // redux stuff
 import { connect } from 'react-redux';
@@ -118,7 +120,8 @@ class Modal extends React.Component {
                 style={{ height: '129px', width: '150px' }}
                 alt=''
               />
-              <button className='modal-change-img-btn'>Change Image</button>
+              {/* <button className='modal-change-img-btn'>Change Image</button> */}
+              <ImageListModal/>
             </div>
 
             <div
