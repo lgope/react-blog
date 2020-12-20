@@ -1,5 +1,4 @@
 import React from 'react';
-import settingIcon from '../../asstes/settingss.png';
 import './modal.styles.css';
 
 // redux stuff
@@ -10,8 +9,10 @@ class ImageListModal extends React.Component {
   state = {
     isOpen: false,
     isOptionChanged: false,
-    selectedOptionIndex: 0,
+    newImage: {},
+    imageList: [],
   };
+
 
   // show or hide popup modal
   toggle() {
@@ -27,7 +28,10 @@ class ImageListModal extends React.Component {
     });
   }
 
+  // TODO: Should update image list
+  // myArray = myArray.filter( ( el ) => !toRemove.includes( el ) );
   render() {
+    console.log('new image ', this.state.images);
     return (
       <div>
         <button className='modal-change-img-btn' onClick={() => this.toggle()}>
@@ -39,14 +43,23 @@ class ImageListModal extends React.Component {
         >
           <h5>Image list modal</h5>
 
-          <div className="image-lists">
-              {this.props.images && this.props.images.map(image => <input className='images selectedimage' type="image" src={image.img} alt={image.name} />)}
-              {/* {this.props.images && this.props.images.map(image => <img className='images' src={image.img} alt={image.name} />)} */}
+          <div className='image-lists'>
+            {this.props.images && this.props.images.map(image => (
+              <input
+                className='images selectedimage'
+                type='image'
+                src={image.img}
+                alt={image.name}
+                onClick={() => this.setState({ newImage: image })}
+              />
+            ))}
           </div>
 
           <div className='imagelist-modal-actionBtn'>
-            <button className="img-confirm-btn">Confirm</button>
-            <button className="img-cancel-btn" onClick={() => this.toggle()}>Cancel</button>
+            <button className='img-confirm-btn'>Confirm</button>
+            <button className='img-cancel-btn' onClick={() => this.toggle()}>
+              Cancel
+            </button>
           </div>
         </div>
       </div>
@@ -55,7 +68,15 @@ class ImageListModal extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  images: state.images.images,
+  images: state.images.images.filter(i => !state.images.selectedImages.find(f => f.img === i.img))
+//   images: state.images.images.filter(
+//     image => !state.images.selectedImages.includes(image)
+//   ),
+//   selectedImages: state.images.selectedImages,
 });
 
+
+// this.props.images.filter(
+//     image => !this.props.selectedImages.includes(image)
+//   );
 export default connect(mapStateToProps, { filterImage })(ImageListModal);
