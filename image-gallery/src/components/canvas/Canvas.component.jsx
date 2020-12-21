@@ -3,8 +3,7 @@ import { DropTarget } from 'react-dnd';
 import imageIcon from '../../asstes/image_icon.png';
 import CanvasImage from './CanvasImage.component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog, faTrash } from '@fortawesome/free-solid-svg-icons';
-// import Card from '../../Card'
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import Modal from '../modal/Modal.component';
 

@@ -38,11 +38,10 @@ const IMAGE_LIST_STYLES = {
 class ImageListPopup extends React.Component {
   state = {
     newImage: {},
-    newImage1: {},
   };
 
   handleConfirm() {
-    console.log('sta ', this.state.newImage);
+    // TODO: condition not working
     if (this.state.newImage) {
       this.props.changeImage(this.props.currentImage, this.state.newImage);
       alert('Image changed successfully!');
